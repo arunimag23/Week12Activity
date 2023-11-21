@@ -36,6 +36,6 @@ from Function test, Function callee
 where isTest(test) and
       calls*(test, callee) and
       callee.getName() = "pressActionKey"
-select test, callee, "is transitively called by a test"
+select test, "calls pressActionKey"
 
 
