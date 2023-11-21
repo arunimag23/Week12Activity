@@ -4,6 +4,7 @@
  * @id javascript/find-tests-calling-pressActionKey
  * @problem.severity recommendation
  */
+
 import javascript
 
 /**
@@ -21,19 +22,20 @@ predicate isTest(Function test) {
 /**
  * Predicate to identify calls to a specific function from another function.
  */
-predicate calls(Function caller, string calleeName) {
+predicate calls(Function caller, Function callee) {
   exists(DataFlow::CallNode call |
     call.getEnclosingFunction() = caller and
-    call.getCallee().getName() = calleeName
+    call.getACallee() = callee
   )
 }
 
 /**
  * Find functions transitively called by tests.
  */
-from Function test, string calleeName
+from Function test, Function callee
 where isTest(test) and
-      calls*(test, calleeName) and
-      calleeName = "pressActionKey"
-select test, calleeName, "is transitively called by a test"
+      calls*(test, callee) and
+      callee.getName() = "pressActionKey"
+select test, callee, "is transitively called by a test"
+
 
