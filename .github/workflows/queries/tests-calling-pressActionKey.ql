@@ -27,6 +27,6 @@ predicate callsPressActionKey(CallExpr call) {
 
 from Function test, CallExpr call
 where isTest(test) and
-      call.getTarget().getEnclosingFunction() = test and
-      callsPressActionKey(call)
+      callsPressActionKey(call) and
+      call.getEnclosingFunction() = test
 select test, "calls pressActionKey"
