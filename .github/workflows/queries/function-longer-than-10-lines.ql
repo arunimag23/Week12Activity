@@ -1,21 +1,17 @@
 import javascript
+/**
+ * @description Find functions longer than 10 lines 
+ * @kind problem
+ * @id javascript/function-longer-than-10-lines
+ * @problem.severity recommendation
+ */
 
-class MyFunction extends Declaration {
-  MyFunction() {
-    exists(FunctionLike fl |
-      fl.getAncestorOfType(this) and
-      fl.getEnclosingFunction() = this
-    )
-  }
+// Select functions longer than 10 lines
 
-  predicate hasLengthOverTen() {
-    getNumLines() > 10
-  }
-}
+from Function func
+where func.getNumLines() > 10 
+select func
 
-from MyFunction f
-where f.hasLengthOverTen()
-select f, f.getNumLines(), "Function longer than 10 lines"
 
 
 
