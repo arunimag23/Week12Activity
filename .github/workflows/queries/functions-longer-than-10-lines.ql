@@ -23,5 +23,5 @@ class MyFunction extends FunctionLike {
 }
 
 from MyFunction f
-where isLengthOverTen(f)
+where hasLengthOverTen(f)
 select f, "Function longer than 10 lines"
