@@ -1,5 +1,7 @@
 import javascript
 
+import javascript
+
 // Define a class to represent functions
 class MyFunction extends FunctionLike {
   MyFunction() {
@@ -10,13 +12,14 @@ class MyFunction extends FunctionLike {
   }
 
   // Define a predicate to calculate the number of lines in a function
-  predicate hasLengthOver(int threshold) {
-    getNumLines() > threshold
+
+  predicate hasLengthOverTen() {
+    getNumLines() > 10
   }
 }
 
-from MyFunction f, int threshold
-where f.hasLengthOver(threshold)
-  and threshold = 10
+from MyFunction f
+where f.hasLengthOverTen()
 select f, f.getNumLines(), "Function longer than 10 lines"
+
 
