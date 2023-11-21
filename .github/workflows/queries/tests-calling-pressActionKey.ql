@@ -22,11 +22,11 @@ predicate isTest(Function test) {
  * Predicate to identify calls to the function "pressActionKey".
  */
 predicate callsPressActionKey(CallExpr call) {
-  call.getCalleeName() = "pressActionKey"
+  call.getCallee().getName() = "pressActionKey"
 }
 
 from Function test, CallExpr call
 where isTest(test) and
-      call in test.getBody().getAsts().getCallExprs() and
+      call.getTarget().getEnclosingFunction() = test and
       callsPressActionKey(call)
 select test, "calls pressActionKey"
