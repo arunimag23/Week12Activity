@@ -19,13 +19,21 @@ predicate isTest(Function test) {
 }
 
 /**
- * Predicate to identify calls to the function "pressActionKey".
+ * Predicate to identify calls to a specific function from another function.
  */
-predicate callsPressActionKey(CallExpr call) {
-  call.getName() = "pressActionKey"
+predicate calls(Function caller, string calleeName) {
+  exists(DataFlow::CallNode call |
+    call.getEnclosingFunction() = caller and
+    call.getCallee().getName() = calleeName
+  )
 }
 
-from Function test, CallExpr call
+/**
+ * Find functions transitively called by tests.
+ */
+from Function test, string calleeName
 where isTest(test) and
-      callsPressActionKey(call)
-select test, "calls pressActionKey"
+      calls*(test, calleeName) and
+      calleeName = "pressActionKey"
+select test, calleeName, "is transitively called by a test"
+
