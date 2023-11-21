@@ -7,11 +7,17 @@ import javascript
  */
 
 // Select functions longer than 10 lines
+class MyFunction extends FunctionLike {
+  MyFunction() {
+    exists(FunctionDeclaration fd |
+      fd = this and
+      fd.getNumLines() > 10
+    )
+  }
+}
 
-from Function func
-where func.getNumLines() > 10 
-select func
-
+from MyFunction f
+select f, f.getNumLines(), "Function longer than 10 lines"
 
 
 
