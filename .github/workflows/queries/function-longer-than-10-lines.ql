@@ -1,9 +1,22 @@
 import javascript
 
-// Define a query for finding functions longer than 10 lines
+// Define a class to represent functions
 
-from FunctionLike fl, int length
-where
-  fl.getNumLines() > 10 and
-  length = fl.getNumLines() - 10
-select fl, length, "Function longer than 10 lines"
+class MyFunction extends FunctionLike {
+  MyFunction() {
+    // Define constraints for MyFunction class
+    exists(FunctionLike fl |
+      fl.getEnclosingFunction() = this
+    )
+  }
+
+  // Define a predicate to calculate the number of lines in a function
+
+  predicate hasLengthOver(int threshold) {
+    getNumLines() > threshold
+  }
+}
+
+from MyFunction f
+where f.hasLengthOver(10)
+select f, f.getNumLines(), "Function longer than 10 lines"
